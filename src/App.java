@@ -4,10 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 import Interfaz.MainFrame;
+import Interfaz.FrameRegistro;
 public class App {
     public static void main(String[] args) {
-        MainFrame Interfaz = new MainFrame();
-        Interfaz.initialize();
+        MainFrame InterfazLogin = new MainFrame();
+        //InterfazLogin.initialize();
+        FrameRegistro InterfazRegistro = new FrameRegistro();
+        InterfazRegistro.InicioRegistro();
 
     }
 }
