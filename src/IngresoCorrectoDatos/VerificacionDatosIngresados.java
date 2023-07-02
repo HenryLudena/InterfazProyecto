@@ -1,4 +1,4 @@
-package Interfaz;
+package IngresoCorrectoDatos;
 
 import java.awt.Font;
 
@@ -26,7 +26,7 @@ public class VerificacionDatosIngresados {
                     JLCedulaVerificada.setText("Longitud no válida");
             } catch (Exception e) {
                 //En caso de no ingresar solo números
-                JLCedulaVerificada.setText("Cédula no válida");
+                JLCedulaVerificada.setText("Carácteres no válidos");
             }
         return JLCedulaVerificada;
     }

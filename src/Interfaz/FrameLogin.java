@@ -4,12 +4,13 @@ package Interfaz;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Interfaz.VerificacionDatosIngresados;
 
 //JFrame
 import javax.swing.*;
 
-public class MainFrame extends JFrame {
+import IngresoCorrectoDatos.VerificacionDatosIngresados;
+
+public class FrameLogin extends JFrame {
     //Font define el tipo de letra en la interfaz " Arial" es el nombre, BOLD es negrita (tambien hay plain e italic, despues esta el tamaño de letra)
     final private Font mainFont = new Font("Arial", Font.BOLD, 18);
     JTextField tfCedula, tfContraseña;
@@ -20,8 +21,10 @@ public class MainFrame extends JFrame {
     //setText: sobrescribe a un JLabel con un nuevo texto 
     //setOpaque: Imprime en la interfaz un fondo transparente si es falso, caso contrario no se distingue el color del background
     //JPanel: Los paneles contienen los datos de botones, JLabel y JTextField. En este caso se imprimirá únicamente el panel principal que es una agrupación de todos los paneles
+    //Para ActionListener se debe añadir unimplemented methods mediante el foco cuando se coloca "new ActionListener"
     JLabel ImpresiónCédula, ImpresiónContraseña, JLCedulaVerificada;
-    public void initialize(){
+    public void InicioLogin(){
+        //Inicialización de variable verificación para llamar a la clase VerificacionDatosIngresados
         VerificacionDatosIngresados verificacion = new VerificacionDatosIngresados();
         /*************** Panel Inicial ***************/
             //Texto "Ingrese su cédula"
@@ -66,14 +69,21 @@ public class MainFrame extends JFrame {
             //Los eventos que suceden al presionar el boton OK
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
                 //Designar variables JTextField (Datos que ingresó el usuario) como String para poder imprimirse
                 JLCedulaVerificada = verificacion.IngresoCedula(tfCedula, JLCedulaVerificada);
+                //Verificación si cédula es la correcta
+                String cedulaVerificada = JLCedulaVerificada.getText();
+                //Según si la cédula es correcta o no enseñar mensaje
+                if (cedulaVerificada.equals("Longitud no válida")||cedulaVerificada.equals("Carácteres no válidos")) {
+                    ImpresiónCédula.setText("Cédula: " + cedulaVerificada);
+                    //Vaciar la casilla donde el usuario ingresa la cédula porque es errónea
+                    tfCedula.setText("");
+                }else{
+                    //Definición de variable string para colocar setText en "ImpresiónCédula"
                 String cedula = JLCedulaVerificada.getText();
-                String contraseña = tfContraseña.getText();
                 //Impresión de los datos del Usuario
                 ImpresiónCédula.setText("Cédula: "+cedula);
-                ImpresiónContraseña.setText("Contraseña: "+contraseña);
+            }
             }
         });
 
@@ -84,7 +94,6 @@ public class MainFrame extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
                 //Limpieza de la interfaz de los JLabel y JTextField
                 tfCedula.setText("");
                 tfContraseña.setText("");
@@ -105,7 +114,7 @@ public class MainFrame extends JFrame {
 
         /*************** Panel de Botones ***************/
         JPanel buttonsPanel = new JPanel();
-        //En GridLayout hgap indica el espacio (en pixeles) que separa los botones, vgap indica el espacio en vertical
+        //En GridLayout hgap indica el espacio horizontal(en pixeles) que separa los botones, vgap indica el espacio en vertical
         buttonsPanel.setLayout(new GridLayout(1,2, 5, 5));
         buttonsPanel.setOpaque(false);
         buttonsPanel.add(btnLogin);
