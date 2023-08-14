@@ -87,6 +87,7 @@ public class FrameLogin extends JFrame {
             }
         });
 
+        
         /*************** Botón que limpia la Interfaz ***************/
         JButton btnClear = new JButton("Limpiar");
         btnClear.setFont(mainFont);

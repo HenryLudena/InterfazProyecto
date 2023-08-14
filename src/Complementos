@@ -1,0 +1,4 @@
+1. Interfaz (credencial) donde aparzcan los datos de la mascota (imagen, nombre, edad, ...)
+2. Codigo QR junto a la credencial para escaneo
+3. Almacenar en SQLite
+4. 

@@ -125,7 +125,7 @@ public class FrameRegistro extends JFrame{
 
       /*************** Panel en la Interfaz ***************/
       add(PanelPrincipal);
-
+      
 
       /*************** Datos de la Ventana ***************/
         //Nombre de la "App"
