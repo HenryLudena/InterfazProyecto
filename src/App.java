@@ -11,7 +11,7 @@ import Interfaz.FrameRegistro;
 import ModuloExterno.CodigoQR;
 public class App {
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        FramePrincipal Frame = new FramePrincipal();
+        //FramePrincipal Frame = new FramePrincipal();
         //Frame.MainFrame();
         CodigoQR QRCode = new CodigoQR();
         QRCode.CodigoQR();

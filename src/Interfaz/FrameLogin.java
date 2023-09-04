@@ -14,9 +14,9 @@ public class FrameLogin extends JFrame {
     //Font define el tipo de letra en la interfaz " Arial" es el nombre, BOLD es negrita (tambien hay plain e italic, despues esta el tamaño de letra)
     final private Font mainFont = new Font("Arial", Font.BOLD, 18);
     JTextField tfCedula, tfContraseña;
-    //JLabel: muestra texto en la interfaz (no cambiable)
+    //JLabel: muestra texto en la interfaz (Ej: "Ingrese su cédula") (no cambiable)
     //JTextField: permite el ingreso de datos por parte del ususario
-    //¿JFrame: imprime la interfaz?
+    //JFrame: Es la ventana a mostrar
     //ActionListener: es el escuchador si el usuario presiona un botón llama al ActionPerformed y este último ejecuta una acción
     //setText: sobrescribe a un JLabel con un nuevo texto 
     //setOpaque: Imprime en la interfaz un fondo transparente si es falso, caso contrario no se distingue el color del background

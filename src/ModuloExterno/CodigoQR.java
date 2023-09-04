@@ -16,7 +16,7 @@ public class CodigoQR {
     private static final int qrTanAncho = 400;
     private static final int qrTanAlto = 400;
     private static final String formato = "png";
-    private static final String ruta = "src\\ModuloExterno\\QRCodeStorage\\Codigo.png";
+    private static final String ruta = "src\\ModuloExterno\\QRCodeStorage\\Codigo3.png";
 
     public void CodigoQR () throws FileNotFoundException, IOException{
         System.out.println("Introduzca la cadena a modificar: ");
