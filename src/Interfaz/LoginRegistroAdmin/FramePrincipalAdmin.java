@@ -1,18 +1,25 @@
-package Interfaz;
+package Interfaz.LoginRegistroAdmin;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
+import Funciones.Waiter;
 import javax.swing.*;
-import javax.swing.border.Border;
 
-public class FramePrincipal extends JFrame {
+
+public class FramePrincipalAdmin extends JFrame {
     final private Font mainFont = new Font("Arial", Font.BOLD, 18);
+    Waiter waiter = new Waiter();
+    private boolean frameClosed = true;
     public void MainFrame(){
-        FrameRegistro FrameRegistro = new FrameRegistro();
-        FrameLogin FrameLogin = new FrameLogin();
+        //FrameRegistro FrameRegistro = new FrameRegistro();
+        FrameLoginAdmin FrameLoginAdmin = new FrameLoginAdmin();
+        FrameRegistroAdmin FrameRegistroAdmin = new FrameRegistroAdmin();
         JLabel mensaje; 
+        
         /*************** Mensaje***************/
         mensaje = new JLabel("Elija si desea registrarse o loguearse");
         mensaje.setFont(mainFont);
@@ -26,7 +33,7 @@ public class FramePrincipal extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                FrameRegistro.InicioRegistro();
+                FrameRegistroAdmin.InicioRegistro();
                 
             }
         });
@@ -40,7 +47,7 @@ public class FramePrincipal extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                FrameLogin.InicioLogin();
+                FrameLoginAdmin.InicioLogin();
                 
             }
         });
@@ -79,5 +86,19 @@ public class FramePrincipal extends JFrame {
         //Ventana visible 
         setVisible(true);
 
+
+        //Colocación del waiter
+    //     addWindowListener(new WindowAdapter() {
+    //         public void windowClosing(WindowEvent e) {
+    //           frameClosed = true;
+    //         }
+    //    });
+    //    while (frameClosed) {
+    //       try {
+    //           Thread.sleep(100); // Espera un tiempo antes de verificar la bandera nuevamente
+    //       } catch (InterruptedException ex) {
+    //           ex.printStackTrace();
+    //       }
+    //   }
     }
 }

@@ -1,4 +1,4 @@
-package Interfaz;
+package Interfaz.LoginRegistroAdmin;
  
 //Dimension, Font
 import java.awt.*;
@@ -10,7 +10,7 @@ import javax.swing.*;
 
 import IngresoCorrectoDatos.VerificacionDatosIngresados;
 
-public class FrameLogin extends JFrame {
+public class FrameLoginAdmin extends JFrame {
     //Font define el tipo de letra en la interfaz " Arial" es el nombre, BOLD es negrita (tambien hay plain e italic, despues esta el tamaño de letra)
     final private Font mainFont = new Font("Arial", Font.BOLD, 18);
     JTextField tfCedula, tfContraseña;

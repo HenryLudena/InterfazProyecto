@@ -16,11 +16,12 @@ public class CodigoQR {
     private static final int qrTanAncho = 400;
     private static final int qrTanAlto = 400;
     private static final String formato = "png";
-    private static final String ruta = "src\\ModuloExterno\\QRCodeStorage\\Codigo3.png";
+    private static final String ruta = "src\\ModuloExterno\\QRCodeStorage\\Codigo4.png";
 
     public void CodigoQR () throws FileNotFoundException, IOException{
         System.out.println("Introduzca la cadena a modificar: ");
         Scanner sc = new Scanner(System.in);
+        //El string que va a imprimir el mensaje en el codigo QR
         String dato = sc.nextLine();
         System.out.println("Conectando...");
         BitMatrix matriz = null;

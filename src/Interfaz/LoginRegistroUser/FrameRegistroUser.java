@@ -1,22 +1,28 @@
-package Interfaz;
+package Interfaz.LoginRegistroUser;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
+
+import Funciones.Waiter;
 import IngresoCorrectoDatos.VerificacionDatosIngresados;
 
-public class FrameRegistro extends JFrame{
+public class FrameRegistroUser extends JFrame{
      final private Font mainFont = new Font("Arial", Font.BOLD, 18);
      JTextField tfDuenoMascota, tfNumeroCedula, tfNuevaContraseña;
      JLabel JLImpresiónNombre, JLImpresiónCedula, JLImpresiónContraseña, JLCedulaVerificada;
-     String cedula;
-     public void InicioRegistro(){
+     private String cedula, cedulaVerificada, nuevaContrasena, nombreDueno;
+     private boolean frameClosed = true;
+     Waiter waiter = new Waiter();
+    public void InicioRegistro(){
       VerificacionDatosIngresados verificacion = new VerificacionDatosIngresados();
         /*************** Panel Inicial ***************/
-         //Texto "Ingrese su cédula"
+         //Texto "Ingrese un usuario"
         JLabel IndicacionIngresoNombre = new JLabel("Cree un usuario");
         IndicacionIngresoNombre.setFont(mainFont);
         //Ingreso Nombre de Usuario
@@ -47,9 +53,9 @@ public class FrameRegistro extends JFrame{
         PanelPideDatos.add(tfNuevaContraseña);
         
         /*************** Obtención de Datos ***************/
-        String nombreDueno = tfDuenoMascota.getText();
+        nombreDueno = tfDuenoMascota.getText();
         cedula = tfNumeroCedula.getText();
-        String nuevaContrasena = tfNuevaContraseña.getText();
+        nuevaContrasena = tfNuevaContraseña.getText();
         JLCedulaVerificada = new JLabel();
         JLCedulaVerificada.setFont(mainFont);
         JLImpresiónCedula = new JLabel();
@@ -66,9 +72,10 @@ public class FrameRegistro extends JFrame{
          @Override
          public void actionPerformed(ActionEvent e) {
             JLCedulaVerificada = verificacion.IngresoCedula(tfNumeroCedula, JLCedulaVerificada);
-            String cedulaVerificada = JLCedulaVerificada.getText();
+            cedulaVerificada = JLCedulaVerificada.getText();
+            
             if(cedulaVerificada.equals("Longitud no válida")||cedulaVerificada.equals("Carácteres no válidos")){
-              JLImpresiónCedula.setText("Cédula: "+cedulaVerificada); 
+              JLImpresiónCedula.setText("Cédula: " + cedulaVerificada); 
               tfNumeroCedula.setText("");
               cedula = "";
              }else{
@@ -76,6 +83,7 @@ public class FrameRegistro extends JFrame{
              JLImpresiónCedula.setText("Su cédula se ha ingresado correctamente");
              JLImpresiónNombre.setText("Su Usuario " + usuario + " se ha ingresado correctamente");
              JLImpresiónContraseña.setText("Su contraseña se ha ingresado correctamente");
+             //Aqui poner cedula y el resto
              } 
           }
         });
@@ -126,7 +134,7 @@ public class FrameRegistro extends JFrame{
       /*************** Panel en la Interfaz ***************/
       add(PanelPrincipal);
       
-
+      setCedulaVerificada(cedulaVerificada);
       /*************** Datos de la Ventana ***************/
         //Nombre de la "App"
         setTitle("Registro Red Social de Mascotas");
@@ -138,5 +146,46 @@ public class FrameRegistro extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         //Ventana visible 
         setVisible(true);
+        
+    //     addWindowListener(new WindowAdapter() {
+    //       public void windowClosing(WindowEvent e) {
+    //         frameClosed = true;
+    //       }
+    //  });
+    //  while (!frameClosed) {
+    //     try {
+    //         Thread.sleep(100); // Espera un tiempo antes de verificar la bandera nuevamente
+    //     } catch (InterruptedException ex) {
+    //         ex.printStackTrace();
+    //     }
+    // }
+    // addWindowListener(waiter);
+    // try {
+    //     waiter.waitForFrameToClose();
+    // } catch (InterruptedException e) {
+    //     e.printStackTrace();
+    // }
      }
+
+    
+
+    public String getCedulaVerificada() {
+        return cedulaVerificada;
+    }
+    public void setCedulaVerificada(String cedulaVerificada) {
+        this.cedulaVerificada = cedulaVerificada;
+    }
+    public String getNuevaContrasena() {
+        return nuevaContrasena;
+    }
+    public void setNuevaContrasena(String nuevaContrasena) {
+        this.nuevaContrasena = nuevaContrasena;
+    }
+    public String getNombreDueno() {
+        return nombreDueno;
+    }
+    public void setNombreDueno(String nombreDueno) {
+        this.nombreDueno = nombreDueno;
+    }
 }
+
