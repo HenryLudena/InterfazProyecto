@@ -1,15 +1,18 @@
 -- Creación de tablas con claves primarias autoincrementadas
 CREATE TABLE IF NOT EXISTS MASCOTA (
-   MASID            INTEGER     PRIMARY KEY AUTOINCREMENT,
-   PROID            INTEGER     NOT NULL,
-   TIPID            INTEGER     NOT NULL,
-   MASNOMBRE        TEXT        NOT NULL,
-   MASOBSERVACION   TEXT,
-   MASESTADO        VARCHAR(1)  DEFAULT ('A'),
-   MASFECHAINGRESO  VARCHAR(20) DEFAULT(datetime('now')),
+   MASID                         INTEGER     PRIMARY KEY AUTOINCREMENT,
+   PERFIL_ID                     INTEGER     NOT NULL,
+   PROID                         INTEGER     NOT NULL,
+   TIPID                         INTEGER     NOT NULL,
+   MAS_NOMBRE                    TEXT        NOT NULL,
+   MAS_OBSERVACION               TEXT        NOT NULL,
+   MAS_SINTOMA_ALERGIAS          TEXT        NOT NULL,
+   MAS_ESTADO                    VARCHAR(1)  DEFAULT ('A'),
+   MAS_FECHAINGRESO              VARCHAR(20) DEFAULT(datetime('now')),
 
    FOREIGN KEY (PROID) REFERENCES PROPIETARIO(PROID),
-   FOREIGN KEY (TIPID) REFERENCES TIPO(TIPID)
+   FOREIGN KEY (TIPID) REFERENCES TIPO(TIPID),
+   FOREIGN KEY (PERFIL_ID) REFERENCES PERFIL(PERFIL_ID)
 );
 
 CREATE TABLE IF NOT EXISTS PROPIETARIO (
@@ -28,46 +31,49 @@ CREATE TABLE IF NOT EXISTS TIPO (
    TIPESTADO      VARCHAR(1)    DEFAULT('A')
 );
 -- Insertar datos en la tabla TIPO
-INSERT INTO TIPO (TIPNOMBRE, TIPESTADO) VALUES
-    ('Gato',    1),
-    ('Perro',   1),
-    ('Conejo',  1),
-    ('Pájaro',  1),
-    ('Reptil',  1);
+INSERT INTO TIPO (TIPNOMBRE) VALUES
+    ('Gato'),
+    ('Perro'),
+    ('Conejo'),
+    ('Pájaro'),
+    ('Reptil');
 
 -- Insertar datos en la tabla PROPIETARIO
-INSERT INTO PROPIETARIO (PRONOMBRES, PROAPELLIDOS, PRODIRECCION, PROCORREO, PROTELEFONO, PROESTADO) VALUES
-    ('Ana',         'García',       'Calle 234',    'ana@example.com',          '1111111111', 1),
-    ('Luis',        'Martínez',     'Avenida 567',  'luis@example.com',         '2222222222', 1),
-    ('Elena',       'Rodríguez',    'Plaza 890',    'elena@example.com',        '3333333333', 1),
-    ('Alejandro',   'Fernández',    'Callejón 12',  'alejandro@example.com',    '4444444444', 1),
-    ('Sofía',       'Hernández',    'Calle 567',    'sofia@example.com',        '5555555555', 1),
-    ('Javier',      'Díaz',         'Avenida 890',  'javier@example.com',       '6666666666', 1),
-    ('Laura',       'López',        'Plaza 123',    'laura@example.com',        '7777777777', 1),
-    ('Diego',       'Pérez',        'Calle 456',    'diego@example.com',        '8888888888', 1),
-    ('Isabel',      'Gómez',        'Avenida 123',  'isabel@example.com',       '9999999999', 1),
-    ('Manuel',      'Torres',       'Plaza 456',    'manuel@example.com',       '0000000000', 1);
+INSERT INTO PROPIETARIO (PRONOMBRES, PROAPELLIDOS, PRODIRECCION, PROCORREO, PROTELEFONO) VALUES
+    ('Ana',         'García',       'Calle 234',    'ana@example.com',          '1111111111'),
+    ('Luis',        'Martínez',     'Avenida 567',  'luis@example.com',         '2222222222'),
+    ('Elena',       'Rodríguez',    'Plaza 890',    'elena@example.com',        '3333333333'),
+    ('Alejandro',   'Fernández',    'Callejón 12',  'alejandro@example.com',    '4444444444'),
+    ('Sofía',       'Hernández',    'Calle 567',    'sofia@example.com',        '5555555555'),
+    ('Javier',      'Díaz',         'Avenida 890',  'javier@example.com',       '6666666666'),
+    ('Laura',       'López',        'Plaza 123',    'laura@example.com',        '7777777777'),
+    ('Diego',       'Pérez',        'Calle 456',    'diego@example.com',        '8888888888'),
+    ('Isabel',      'Gómez',        'Avenida 123',  'isabel@example.com',       '9999999999'),
+    ('Manuel',      'Torres',       'Plaza 456',    'manuel@example.com',       '0000000000');
 
 
 -- Insertar datos en la tabla MASCOTA
-INSERT INTO MASCOTA (PROID, TIPID, MASNOMBRE, MASOBSERVACION, MASESTADO) VALUES
-    (1, 1, 'Mimi', 'Gata atigrada', 1),
-    (2, 2, 'Bella', 'Perra cariñosa', 1),
-    (3, 1, 'Lucky', 'Gato suertudo', 1),
-    (4, 2, 'Max', 'Perro enérgico', 1),
-    (5, 3, 'Cotton', 'Conejo blanco', 1),
-    (6, 1, 'Lola', 'Gata tranquila', 1),
-    (7, 2, 'Lucy', 'Perra amigable', 1),
-    (8, 1, 'Simba', 'Gato majestuoso', 1),
-    (9, 3, 'Coco', 'Conejo travieso', 1),
-    (10, 2, 'Boby', 'Perro juguetón', 1);
+INSERT INTO MASCOTA (PROID, TIPID, MAS_NOMBRE, MAS_OBSERVACION, MAS_SINTOMA_ALERGIAS, PERFIL_ID) VALUES
+    (1, 1, 'Mimi', 'Gata atigrada', "Estornudos", 1),
+    (2, 2, 'Bella', 'Perra cariñosa', "Letargo", 2),
+    (3, 1, 'Lucky', 'Gato suertudo', "Enrojecimiento", 3),
+    (4, 2, 'Max', 'Perro enérgico', "Inflamación hocico", 4),
+    (5, 3, 'Cotton', 'Conejo blanco', "Rascado Frecuente", 5),
+    (6, 1, 'Lola', 'Gata tranquila', "Estornudos", 6),
+    (7, 2, 'Lucy', 'Perra amigable', "Pérdida pelo", 7),
+    (8, 1, 'Simba', 'Gato majestuoso', "Acumulación cera oído", 8),
+    (9, 3, 'Coco', 'Conejo travieso', "Naúseas", 9),
+    (10, 2, 'Boby', 'Perro juguetón', "Diarrea", 10);
 
-SELECT M.MASNOMBRE "NombreMascota", T.TIPNOMBRE "TipoMascota", P.PRONOMBRES "Pronombre", P.PROAPELLIDOS "NombrePropietario", P.PROTELEFONO "TelefonoPropietario", M.MASOBSERVACION "Observacion"
+SELECT M.MAS_NOMBRE "NombreMascota", T.TIPNOMBRE "TipoMascota", P.PRONOMBRES "Pronombre", 
+P.PROAPELLIDOS "NombrePropietario", P.PROTELEFONO "TelefonoPropietario", M.MAS_OBSERVACION "Observacion", M.MAS_SINTOMA_ALERGIAS 
 FROM MASCOTA M
 JOIN TIPO T ON M.TIPID = T.TIPID
 JOIN PROPIETARIO P ON M.PROID = P.PROID
-WHERE M.MASID = '1'; -- Aquí va el ID de la mascota
+JOIN PERFIL PE ON M.PERFIL_ID = PE.PERFIL_ID
+WHERE PE.PERFIL_ID = '3'; -- Aquí va el ID de la mascota
 
+--Tabla PERFIL(usuario) (INSERT, CREATE y SELECT)
 CREATE TABLE IF NOT EXISTS PERFIL (
    PERFIL_ID                        INTEGER     PRIMARY KEY AUTOINCREMENT,
    MASID                            INTEGER     NOT NULL,
@@ -92,6 +98,11 @@ INSERT INTO PERFIL (CEDULA_PERFIL_NOMBRE, CONTRASENA_PERFIL_NOMBRE, USUARIO_PERF
 ("1139233223", "ruen38endn", "Isabel2dkdj", 9),
 ("1139332323", "684jdj", "Manueldsisj", 10);
 
+SELECT p.CEDULA_PERFIL_NOMBRE, p.CONTRASENA_PERFIL_NOMBRE, p.USUARIO_PERFIL_NOMBRE 
+FROM PERFIL p
+WHERE PERFIL_ESTADO = 'A';
+
+--Tabla Administrador (INSERT, CREATE y SELECT)
 CREATE TABLE IF NOT EXISTS PERFIL_ADMINISTRADOR (
 PERFIL_ADMINISTRADOR_ID                   INTEGER           PRIMARY KEY AUTOINCREMENT,
 CONTRASENA_ADMINISTRADOR_NOMBRE           TEXT              NOT NULL,
@@ -113,6 +124,10 @@ INSERT INTO PERFIL_ADMINISTRADOR (CEDULA_ADMINISTRADOR_NOMBRE, CONTRASENA_ADMINI
 ("1234567895","1qazws2d2vb", "BernardoLuis"),
 ("1234457896","1qa34sedcvb", "MacasMiCasa"),
 ("1233467897","1qaz342edcvb", "IuoGamer");
+
+SELECT pa.CEDULA_ADMINISTRADOR_NOMBRE, pa.CONTRASENA_ADMINISTRADOR_NOMBRE, pa.USUARIO_ADMINISTRADOR_NOMBRE 
+FROM PERFIL_ADMINISTRADOR pa
+WHERE PERFIL_ADMINISTRADOR_ESTADO = 'A';
 
 
 
