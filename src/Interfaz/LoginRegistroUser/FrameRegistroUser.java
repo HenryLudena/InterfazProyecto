@@ -137,7 +137,7 @@ public class FrameRegistroUser extends JFrame{
       setCedulaVerificada(cedulaVerificada);
       /*************** Datos de la Ventana ***************/
         //Nombre de la "App"
-        setTitle("Registro Red Social de Mascotas");
+        setTitle("REGISTRO PET NETWORK");
         //Tamaño de la Ventana (Normal)
         setSize(500, 600);
         //Tamaño de la Ventana (Mínimo)

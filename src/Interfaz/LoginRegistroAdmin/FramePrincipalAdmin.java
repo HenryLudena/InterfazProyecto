@@ -5,35 +5,63 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
 
 import Funciones.Waiter;
+import Interfaz.AdministradorUsuario.FrameNivelJerarquia;
+
 import javax.swing.*;
+
+import Framework.NetworkException;
 
 
 public class FramePrincipalAdmin extends JFrame {
     final private Font mainFont = new Font("Arial", Font.BOLD, 18);
     Waiter waiter = new Waiter();
     private boolean frameClosed = true;
-    public void MainFrame(){
+
+
+    public void MainFrame() throws NetworkException, SQLException{
         //FrameRegistro FrameRegistro = new FrameRegistro();
         FrameLoginAdmin FrameLoginAdmin = new FrameLoginAdmin();
-        FrameRegistroAdmin FrameRegistroAdmin = new FrameRegistroAdmin();
+        FrameNivelJerarquia frameNivelJerarquia = new FrameNivelJerarquia();
         JLabel mensaje; 
         
-        /*************** Mensaje***************/
-        mensaje = new JLabel("Elija si desea registrarse o loguearse");
+        
+        /*************** Imagen de bienvenida ***************/
+        ImageIcon logoIcon = new ImageIcon("src/Interfaz/Imagenes/perro_admin.jpg");
+        JLabel logoLabel = new JLabel(logoIcon);
+        logoLabel.setHorizontalAlignment(JLabel.CENTER);
+        
+        /*************** Mensaje y Gif***************/
+        mensaje = new JLabel("¡ESTAMOS FELICES DE VERTE DE NUEVO ADMINISTRADOR!");
         mensaje.setFont(mainFont);
 
+        // Centrar horizontalmente el mensaje
+        mensaje.setHorizontalAlignment(JLabel.CENTER);
 
-        /*************** Botón Register***************/
-        JButton btnRegister = new JButton("Register");
+
+        // Crear un contenedor vertical para centrar el mensaje verticalmente
+        Box verticalBox = Box.createVerticalBox();
+        verticalBox.add(Box.createVerticalStrut(100)); // Espacio en la parte superior
+        verticalBox.add(mensaje);
+        verticalBox.add(Box.createVerticalStrut(100)); // Espacio en la parte inferior
+
+
+        /*************** Botón Volver***************/
+        JButton btnRegister = new JButton("Volver");
         btnRegister.setFont(mainFont);
         btnRegister.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                FrameRegistroAdmin.InicioRegistro();
+                try {
+                    frameNivelJerarquia.FrameInicio();
+                } catch (NetworkException | SQLException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
                 
             }
         });
@@ -47,7 +75,11 @@ public class FramePrincipalAdmin extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                FrameLoginAdmin.InicioLogin();
+                try {
+                    FrameLoginAdmin.InicioLogin();
+                } catch (NetworkException | SQLException e1) {
+                    e1.printStackTrace();
+                }
                 
             }
         });
@@ -68,7 +100,9 @@ public class FramePrincipalAdmin extends JFrame {
         panelPrincipal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         panelPrincipal.add(mensaje, BorderLayout.NORTH);
         panelPrincipal.add(panelBotones, BorderLayout.SOUTH);
+        panelPrincipal.add(logoLabel, BorderLayout.CENTER);
 
+        logoLabel.setVisible(true);
 
         /*************** Panel en Interfaz ***************/
         add(panelPrincipal);
@@ -76,13 +110,15 @@ public class FramePrincipalAdmin extends JFrame {
 
         /*************** Datos de Ventana ***************/
         //Nombre de la "App"
-        setTitle("Login o Registro Red Social de Mascotas");
+        setTitle("LOGIN O REGISTRO PET NETWORK");
         //Tamaño de la Ventana (Normal)
         setSize(500, 400);
         //Tamaño de la Ventana (Mínimo)
         setMinimumSize(new Dimension(250, 300));
         //Botón de Cierre (X)
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //Centrar la ventana
+        setLocationRelativeTo(null);
         //Ventana visible 
         setVisible(true);
 

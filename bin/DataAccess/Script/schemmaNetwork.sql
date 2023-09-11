@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS MASCOTA (
    MAS_SINTOMA_ALERGIAS          TEXT        NOT NULL,
    MAS_ESTADO                    VARCHAR(1)  DEFAULT ('A'),
    MAS_FECHAINGRESO              VARCHAR(20) DEFAULT(datetime('now')),
-
+   CODIGO_QR                     TEXT        NOT NULL,
    FOREIGN KEY (PROID) REFERENCES PROPIETARIO(PROID),
    FOREIGN KEY (TIPID) REFERENCES TIPO(TIPID),
    FOREIGN KEY (PERFIL_ID) REFERENCES PERFIL(PERFIL_ID)
@@ -53,56 +53,60 @@ INSERT INTO PROPIETARIO (PRONOMBRES, PROAPELLIDOS, PRODIRECCION, PROCORREO, PROT
 
 
 -- Insertar datos en la tabla MASCOTA
-INSERT INTO MASCOTA (PROID, TIPID, MAS_NOMBRE, MAS_OBSERVACION, MAS_SINTOMA_ALERGIAS, PERFIL_ID) VALUES
-    (1, 1, 'Mimi', 'Gata atigrada', "Estornudos", 1),
-    (2, 2, 'Bella', 'Perra cariñosa', "Letargo", 2),
-    (3, 1, 'Lucky', 'Gato suertudo', "Enrojecimiento", 3),
-    (4, 2, 'Max', 'Perro enérgico', "Inflamación hocico", 4),
-    (5, 3, 'Cotton', 'Conejo blanco', "Rascado Frecuente", 5),
-    (6, 1, 'Lola', 'Gata tranquila', "Estornudos", 6),
-    (7, 2, 'Lucy', 'Perra amigable', "Pérdida pelo", 7),
-    (8, 1, 'Simba', 'Gato majestuoso', "Acumulación cera oído", 8),
-    (9, 3, 'Coco', 'Conejo travieso', "Naúseas", 9),
-    (10, 2, 'Boby', 'Perro juguetón', "Diarrea", 10);
+INSERT INTO MASCOTA (PROID, TIPID, MAS_NOMBRE, MAS_OBSERVACION, MAS_SINTOMA_ALERGIAS, PERFIL_ID, CODIGO_QR) VALUES
+    (1, 1, 'Mimi', 'Gata atigrada', "Estornudos", 1, "Nada"),
+    (2, 2, 'Bella', 'Perra cariñosa', "Letargo", 2, "Nada"),
+    (3, 1, 'Lucky', 'Gato suertudo', "Enrojecimiento", 3, "Nada"),
+    (4, 2, 'Max', 'Perro enérgico', "Inflamación hocico", 4, "Nada"),
+    (5, 3, 'Cotton', 'Conejo blanco', "Rascado Frecuente", 5, "Nada"),
+    (6, 1, 'Lola', 'Gata tranquila', "Estornudos", 6, "Nada"),
+    (7, 2, 'Lucy', 'Perra amigable', "Pérdida pelo", 7, "Nada"),
+    (8, 1, 'Simba', 'Gato majestuoso', "Acumulación cera oído", 8, "Nada"),
+    (9, 3, 'Coco', 'Conejo travieso', "Naúseas", 9, "Nada"),
+    (10, 2, 'Boby', 'Perro juguetón', "Diarrea", 10, "Nada");
 
-SELECT M.MAS_NOMBRE "NombreMascota", T.TIPNOMBRE "TipoMascota", P.PRONOMBRES "Pronombre", 
-P.PROAPELLIDOS "NombrePropietario", P.PROTELEFONO "TelefonoPropietario", M.MAS_OBSERVACION "Observacion", M.MAS_SINTOMA_ALERGIAS 
+-- SELECT M.MAS_NOMBRE "NombreMascota", T.TIPNOMBRE "TipoMascota", P.PRONOMBRES "Pronombre", 
+-- P.PROAPELLIDOS "NombrePropietario", P.PROTELEFONO "TelefonoPropietario", M.MAS_OBSERVACION "Observacion", M.MAS_SINTOMA_ALERGIAS 
+-- FROM MASCOTA M
+-- JOIN TIPO T ON M.TIPID = T.TIPID
+-- JOIN PROPIETARIO P ON M.PROID = P.PROID
+-- JOIN PERFIL PE ON M.PERFIL_ID = PE.PERFIL_ID
+-- WHERE PE.PERFIL_ID = '3'; -- Aquí va el ID de la mascota
+
+SELECT pe.USUARIO_PERFIL_NOMBRE, m.MAS_NOMBRE, p.PRONOMBRES, p.PRODIRECCION, p.PROTELEFONO
 FROM MASCOTA M
-JOIN TIPO T ON M.TIPID = T.TIPID
-JOIN PROPIETARIO P ON M.PROID = P.PROID
-JOIN PERFIL PE ON M.PERFIL_ID = PE.PERFIL_ID
-WHERE PE.PERFIL_ID = '3'; -- Aquí va el ID de la mascota
+JOIN PROPIETARIO p ON M.PROID = p.PROID
+JOIN PERFIL pe ON M.PERFIL_ID = pe.PERFIL_ID
 
 --Tabla PERFIL(usuario) (INSERT, CREATE y SELECT)
 CREATE TABLE IF NOT EXISTS PERFIL (
    PERFIL_ID                        INTEGER     PRIMARY KEY AUTOINCREMENT,
-   MASID                            INTEGER     NOT NULL,
    CONTRASENA_PERFIL_NOMBRE         TEXT        NOT NULL,
    CEDULA_PERFIL_NOMBRE             TEXT        UNIQUE NOT NULL,
    USUARIO_PERFIL_NOMBRE            TEXT        UNIQUE NOT NULL,
    PERFIL_ESTADO                    VARCHAR(1)  DEFAULT('A'),
    PERFIL_FECHA_INGRESO             VARCHAR(20) DEFAULT(datetime('now')),
-   PERFIL_FECHA_MODIFICACION        VARCHAR(20) DEFAULT(datetime('now')),
-   FOREIGN KEY (MASID) REFERENCES   MASCOTA(MASID)
+   PERFIL_FECHA_MODIFICACION        VARCHAR(20) DEFAULT(datetime('now'))
 );       
 
-INSERT INTO PERFIL (CEDULA_PERFIL_NOMBRE, CONTRASENA_PERFIL_NOMBRE, USUARIO_PERFIL_NOMBRE, MASID) VALUES
-("1139392023", "profesor1234", "AnaCh1245", 1),
-("1139452023", "contrasena", "Luishhs232", 2),
-("1139492023", "388eej829", "Elenakdksk", 3),
-("1124492023", "0300302rye", "AlejandroLud29", 4),
-("1132492023", "dhdjs929", "Sofiadhdj", 5),
-("1139552023", "383jejcs", "Javierkdd9", 6),
-("1132442023", "eondn282ns", "LaurahdhSj", 7),
-("1133432023", "ri483je", "Diego3jdkw",8),
-("1139233223", "ruen38endn", "Isabel2dkdj", 9),
-("1139332323", "684jdj", "Manueldsisj", 10);
+INSERT INTO PERFIL (CEDULA_PERFIL_NOMBRE, CONTRASENA_PERFIL_NOMBRE, USUARIO_PERFIL_NOMBRE) VALUES
+("1139392023", "profesor1234", "AnaCh1245"),
+("1139452023", "contrasena", "Luishhs232"),
+("1139492023", "388eej829", "Elenakdksk"),
+("1124492023", "0300302rye", "AlejandroLud29"),
+("1132492023", "dhdjs929", "Sofiadhdj"),
+("1139552023", "383jejcs", "Javierkdd9"),
+("1132442023", "eondn282ns", "LaurahdhSj"),
+("1133432023", "ri483je", "Diego3jdkw"),
+("1139233223", "ruen38endn", "Isabel2dkdj"),
+("1139332323", "684jdj", "Manueldsisj");
 
-SELECT p.CEDULA_PERFIL_NOMBRE, p.CONTRASENA_PERFIL_NOMBRE, p.USUARIO_PERFIL_NOMBRE 
-FROM PERFIL p
-WHERE PERFIL_ESTADO = 'A';
+-- SELECT p.CEDULA_PERFIL_NOMBRE, p.CONTRASENA_PERFIL_NOMBRE, p.USUARIO_PERFIL_NOMBRE 
+-- FROM PERFIL p
+-- WHERE PERFIL_ESTADO = 'A';
 
 --Tabla Administrador (INSERT, CREATE y SELECT)
+
 CREATE TABLE IF NOT EXISTS PERFIL_ADMINISTRADOR (
 PERFIL_ADMINISTRADOR_ID                   INTEGER           PRIMARY KEY AUTOINCREMENT,
 CONTRASENA_ADMINISTRADOR_NOMBRE           TEXT              NOT NULL,
@@ -131,7 +135,16 @@ WHERE PERFIL_ADMINISTRADOR_ESTADO = 'A';
 
 
 
+-- DROP TABLE MASCOTA;
+-- DROP TABLE PROPIETARIO;
+-- DROP TABLE  TIPO;
+-- DROP TABLE PERFIL;
+-- DROP TABLE PERFIL_ADMINISTRADOR;
 
+SELECT M.MASID
+FROM MASCOTA M
+JOIN PERFIL PE ON M.PERFIL_ID = PE.PERFIL_ID
+WHERE PE.USUARIO_PERFIL_NOMBRE = 'Elenakdksk';
 
 
 

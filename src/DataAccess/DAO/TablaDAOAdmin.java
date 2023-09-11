@@ -26,7 +26,7 @@ public class TablaDAOAdmin extends SQLiteDataHelper{
     }
 
     public ResultSet getAllAdmin() throws NetworkException{
-        String query = " SELECT pa.CEDULA_ADMINISTRADOR_NOMBRE, pa.CONTRASENA_ADMINISTRADOR_NOMBRE, pa.USUARIO_ADMINISTRADOR_NOMBRE" 
+        String query = " SELECT pa.PERFIL_ADMINISTRADOR_ID, pa.CEDULA_ADMINISTRADOR_NOMBRE, pa.CONTRASENA_ADMINISTRADOR_NOMBRE, pa.USUARIO_ADMINISTRADOR_NOMBRE, pa.PERFIL_ADMINISTRADOR_ESTADO" 
                      + " FROM PERFIL_ADMINISTRADOR pa"
                      + " WHERE PERFIL_ADMINISTRADOR_ESTADO = 'A'";
 
@@ -95,7 +95,7 @@ public class TablaDAOAdmin extends SQLiteDataHelper{
     }
     //Actualizar Datos (Debe colocar cedula y nuevo usuario)
     public boolean updateAdmin(String USUARIO_ADMINISTRADOR_NOMBRE, String NOMBRE_NUEVO) throws NetworkException  {
-        String query = " UPDATE USER SET NOMBRE_NUEVO = ? WHERE  USUARIO_ADMINISTRADOR_NOMBRE = ?";
+        String query = " UPDATE PERFIL_ADMINISTRADOR SET NOMBRE_NUEVO = ? WHERE  USUARIO_ADMINISTRADOR_NOMBRE = ?";
         try {
             Connection          conn = openConnection();
             PreparedStatement pstmt  = conn.prepareStatement(query);
@@ -108,7 +108,7 @@ public class TablaDAOAdmin extends SQLiteDataHelper{
             throw new NetworkException(e, getClass(), "updateAdmin()");
         }
     }
-        public boolean deleteUser(int PERFIL_ADMINISTRADOR_ID) throws NetworkException{
+        public boolean deleteAdmin(int PERFIL_ADMINISTRADOR_ID) throws NetworkException{
             String query = "UPDATE PERFIL_ADMINISTRADOR SET PERFIL_ADMINISTRADOR_ESTADO = 'X' WHERE PERFIL_ADMINISTRADOR_ID = ?";
             try {
             Connection          conn = openConnection();

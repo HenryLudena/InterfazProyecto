@@ -19,7 +19,7 @@ public class NetworkException extends Exception  {
 
     void setDebuggingLog(){
         System.out.println("-------------------------");
-        System.out.println("{AppException}");
+        System.out.println("{NetworkException}");
         System.out.println(getMessage());
         System.out.println(getCause());
         System.out.println("-------------------------");

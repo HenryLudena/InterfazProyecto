@@ -9,20 +9,27 @@ import com.google.zxing.Writer;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+
+import DataAccess.DAO.TablaDAOCodigoQR;
+import DataAccess.Entities.Mascota;
+import Framework.NetworkException;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class CodigoQR {
     private static final int qrTanAncho = 400;
     private static final int qrTanAlto = 400;
     private static final String formato = "png";
-    private static final String ruta = "src\\ModuloExterno\\QRCodeStorage\\Codigo4.png";
 
-    public void CodigoQR () throws FileNotFoundException, IOException{
-        System.out.println("Introduzca la cadena a modificar: ");
-        Scanner sc = new Scanner(System.in);
-        //El string que va a imprimir el mensaje en el codigo QR
-        String dato = sc.nextLine();
+    public void CodigoQR (String Usuario, String nombreMascota, String nombreDueno, String direccion, String telefono) throws FileNotFoundException, IOException, NetworkException{
+        //Usuario es el string que va a imprimir el mensaje en el codigo QR
+        String ruta = "src\\ModuloExterno\\QRCodeStorage\\" + Usuario + ".png";
+        
+        String dato = "¡Hola! Mi nombre es " + nombreMascota + ". " + "\n" + nombreDueno + " es mi dueño." +"\n"+"Vivo en " + direccion + "."+"\nPuedes llamar al " +telefono + "\n¡MUCHAS GRACIAS POR ENCONTRARME!";
         System.out.println("Conectando...");
         BitMatrix matriz = null;
         //Ayuda a la escritura de la información
@@ -48,5 +55,16 @@ public class CodigoQR {
         ImageIO .write(imagen, formato, codigo);
         System.out.println("Listo!");
         codigo.close();
+
+        boolean bandera = updateMascota(ruta, nombreMascota);
+        if(bandera == true)
+        System.out.println("Ruta ingresada en la base de datos");
+        else
+        System.out.println("Error en la conexión");
     }
+
+     public boolean updateMascota(String Ruta, String MAS_NOMBRE) throws NetworkException{
+        return new TablaDAOCodigoQR().updateCodigoQR(Ruta, MAS_NOMBRE);
+    } 
+    
 }

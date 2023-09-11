@@ -6,6 +6,7 @@ public class PerfilAdministrador {
     private String CEDULA_ADMINISTRADOR_NOMBRE;
     private String USUARIO_ADMINISTRADOR_NOMBRE;
     private String PERFIL_ADMINISTRADOR_ESTADO;
+    private String NOMBRE_NUEVO;
 
 
     //Constructor de la tabla con sus respectivos parámetros para getters y setters
@@ -16,7 +17,22 @@ public class PerfilAdministrador {
         this.USUARIO_ADMINISTRADOR_NOMBRE = USUARIO_ADMINISTRADOR_NOMBRE;
         this.PERFIL_ADMINISTRADOR_ESTADO = PERFIL_ADMINISTRADOR_ESTADO;
     }
-
+    public PerfilAdministrador (int PERFIL_ADMINISTRADOR_ID, String USUARIO_ADMINISTRADOR_NOMBRE){
+        this.PERFIL_ADMINISTRADOR_ID = PERFIL_ADMINISTRADOR_ID;
+        this.USUARIO_ADMINISTRADOR_NOMBRE=USUARIO_ADMINISTRADOR_NOMBRE;
+    }
+    public PerfilAdministrador (String CEDULA_ADMINISTRADOR_NOMBRE, String CONTRASENA_ADMINISTRADOR_NOMBRE, String USUARIO_ADMINISTRADOR_NOMBRE){
+        this.CEDULA_ADMINISTRADOR_NOMBRE = CEDULA_ADMINISTRADOR_NOMBRE;
+        this.CONTRASENA_ADMINISTRADOR_NOMBRE = CONTRASENA_ADMINISTRADOR_NOMBRE;
+        this.USUARIO_ADMINISTRADOR_NOMBRE = USUARIO_ADMINISTRADOR_NOMBRE;
+    }
+    public PerfilAdministrador (String USUARIO_ADMINISTRADOR_NOMBRE, String NOMBRE_NUEVO){
+        this.USUARIO_ADMINISTRADOR_NOMBRE=USUARIO_ADMINISTRADOR_NOMBRE;
+        this.NOMBRE_NUEVO = NOMBRE_NUEVO;
+    }
+    public PerfilAdministrador (int PERFIL_ADMINISTRADOR_ID){
+        this.PERFIL_ADMINISTRADOR_ID = PERFIL_ADMINISTRADOR_ID;
+    }
     //Getters y Setters
     public int getPERFIL_ADMINISTRADOR_ID() {
         return PERFIL_ADMINISTRADOR_ID;
@@ -56,5 +72,12 @@ public class PerfilAdministrador {
 
     public void setPERFIL_ADMINISTRADOR_ESTADO(String PERFIL_ADMINISTRADOR_ESTADO) {
         this.PERFIL_ADMINISTRADOR_ESTADO = PERFIL_ADMINISTRADOR_ESTADO;
+    }
+
+    public String getNOMBRE_NUEVO() {
+        return NOMBRE_NUEVO;
+    }
+    public void setNOMBRE_NUEVO(String nOMBRE_NUEVO) {
+        NOMBRE_NUEVO = nOMBRE_NUEVO;
     }
 }

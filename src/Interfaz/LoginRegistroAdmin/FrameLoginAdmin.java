@@ -4,16 +4,20 @@ package Interfaz.LoginRegistroAdmin;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 //JFrame
 import javax.swing.*;
 
+import Framework.NetworkException;
 import IngresoCorrectoDatos.VerificacionDatosIngresados;
 
-public class FrameLoginAdmin extends JFrame {
+public class FrameLoginAdmin extends JFrame{
     //Font define el tipo de letra en la interfaz " Arial" es el nombre, BOLD es negrita (tambien hay plain e italic, despues esta el tamaño de letra)
     final private Font mainFont = new Font("Arial", Font.BOLD, 18);
-    JTextField tfCedula, tfContraseña;
+    JTextField tfCedula, tfContrasena, tfUsuario;
+    private boolean verificacionLoginAdmin;
+    MasterAdmin masterAdmin;
     //JLabel: muestra texto en la interfaz (Ej: "Ingrese su cédula") (no cambiable)
     //JTextField: permite el ingreso de datos por parte del ususario
     //JFrame: Es la ventana a mostrar
@@ -22,8 +26,9 @@ public class FrameLoginAdmin extends JFrame {
     //setOpaque: Imprime en la interfaz un fondo transparente si es falso, caso contrario no se distingue el color del background
     //JPanel: Los paneles contienen los datos de botones, JLabel y JTextField. En este caso se imprimirá únicamente el panel principal que es una agrupación de todos los paneles
     //Para ActionListener se debe añadir unimplemented methods mediante el foco cuando se coloca "new ActionListener"
-    JLabel ImpresiónCédula, ImpresiónContraseña, JLCedulaVerificada;
-    public void InicioLogin(){
+    JLabel ImpresiónCedula, ImpresiónContrasena, JLCedulaVerificada, JLUsuarioVerificado;
+    VerificacionLoginAdmin verificacionLogin = new VerificacionLoginAdmin();
+    public void InicioLogin() throws NetworkException, SQLException{
         //Inicialización de variable verificación para llamar a la clase VerificacionDatosIngresados
         VerificacionDatosIngresados verificacion = new VerificacionDatosIngresados();
         /*************** Panel Inicial ***************/
@@ -34,31 +39,39 @@ public class FrameLoginAdmin extends JFrame {
             tfCedula = new JTextField();
             tfCedula.setFont(mainFont);
             //Texto "Ingrese su contraseña"
-        JLabel IndicacionIngresoContraseña = new JLabel("Ingrese su contraseña");
-        IndicacionIngresoContraseña.setFont(mainFont);
+        JLabel IndicacionIngresoContrasena = new JLabel("Ingrese su contraseña");
+        IndicacionIngresoContrasena.setFont(mainFont);
             //Ingreso Contraseña
-        tfContraseña = new JTextField();
-        tfContraseña.setFont(mainFont);
+        tfContrasena = new JTextField();
+        tfContrasena.setFont(mainFont);
+        //Texto "Ingrese su usuario"
+        JLabel IndicacionIngresoUsuario = new JLabel("Ingrese su nombre de Usuario");
+        IndicacionIngresoUsuario.setFont(mainFont);
+            //Ingreso usuario
+        tfUsuario = new JTextField();
+        tfUsuario.setFont(mainFont);
 
         //Panel con indicaciones de que datos debe ingresar el usuario, y las entradas para ingreso de datos (panel que imprime en interfaz)
         JPanel formaDePanel = new JPanel();
-        formaDePanel.setLayout(new GridLayout(4, 1, 5, 5));
+        formaDePanel.setLayout(new GridLayout(6, 1, 5, 5));
         formaDePanel.setOpaque(false);
         formaDePanel.add(IndicacionIngresoCédula);
         formaDePanel.add(tfCedula);
-        formaDePanel.add(IndicacionIngresoContraseña);
-        formaDePanel.add(tfContraseña);
-
+        formaDePanel.add(IndicacionIngresoContrasena);
+        formaDePanel.add(tfContrasena);
+        formaDePanel.add(IndicacionIngresoUsuario);
+        formaDePanel.add(tfUsuario);
 
         /*************** Impresión de Datos ***************/
         //Texto que indica un texto al usuario según el boton que escoja, no impresión
-        ImpresiónCédula = new JLabel();
-        ImpresiónCédula.setFont(mainFont);
-        ImpresiónContraseña = new JLabel();
-        ImpresiónContraseña.setFont(mainFont);
+        ImpresiónCedula = new JLabel();
+        ImpresiónCedula.setFont(mainFont);
+        ImpresiónContrasena = new JLabel();
+        ImpresiónContrasena.setFont(mainFont);
         JLCedulaVerificada = new JLabel();
         JLCedulaVerificada.setFont(mainFont);
-
+        JLUsuarioVerificado = new JLabel();
+        JLUsuarioVerificado.setFont(mainFont);
 
         /*************** Botón que enseña Datos ***************/
         //Creación del Botón "Enseñar Datos"
@@ -75,14 +88,30 @@ public class FrameLoginAdmin extends JFrame {
                 String cedulaVerificada = JLCedulaVerificada.getText();
                 //Según si la cédula es correcta o no enseñar mensaje
                 if (cedulaVerificada.equals("Longitud no válida")||cedulaVerificada.equals("Carácteres no válidos")) {
-                    ImpresiónCédula.setText("Cédula: " + cedulaVerificada);
+                    ImpresiónCedula.setText("Cédula: " + cedulaVerificada);
                     //Vaciar la casilla donde el usuario ingresa la cédula porque es errónea
                     tfCedula.setText("");
                 }else{
                     //Definición de variable string para colocar setText en "ImpresiónCédula"
                 String cedula = JLCedulaVerificada.getText();
                 //Impresión de los datos del Usuario
-                ImpresiónCédula.setText("Cédula: "+cedula);
+                // ImpresiónCedula.setText("Cédula: "+cedula);
+                String UsuarioVerificar = tfUsuario.getText();
+                String ContrasenaVerificar = tfContrasena.getText();
+                    try {
+                    verificacionLoginAdmin = verificacionLogin.VerificacionLoginAdmin(UsuarioVerificar, ContrasenaVerificar );
+                } catch (NetworkException e1) {
+                    e1.printStackTrace();
+                }
+                if (verificacionLoginAdmin == true){
+                        dispose();
+                        try {
+                            masterAdmin = new MasterAdmin("Interfaz Administrador", "src\\Interfaz\\Imagenes\\Admin.jpg");
+                        } catch (NetworkException | SQLException e1) {
+                            e1.printStackTrace();
+                        }
+                }else
+                        JLUsuarioVerificado.setText("Usuario no válido");
             }
             }
         });
@@ -97,9 +126,9 @@ public class FrameLoginAdmin extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 //Limpieza de la interfaz de los JLabel y JTextField
                 tfCedula.setText("");
-                tfContraseña.setText("");
-                ImpresiónCédula.setText("");
-                ImpresiónContraseña.setText("");
+                tfContrasena.setText("");
+                ImpresiónCedula.setText("");
+                ImpresiónContrasena.setText("");
             }
             
         });
@@ -109,8 +138,8 @@ public class FrameLoginAdmin extends JFrame {
         JPanel datosUsuarioPanel = new JPanel();
         datosUsuarioPanel.setLayout(new GridLayout(2, 1, 5, 1));
         datosUsuarioPanel.setOpaque(false);
-        datosUsuarioPanel.add(ImpresiónCédula);
-        datosUsuarioPanel.add(ImpresiónContraseña);
+        datosUsuarioPanel.add(ImpresiónCedula);
+        datosUsuarioPanel.add(ImpresiónContrasena);
 
 
         /*************** Panel de Botones ***************/
@@ -121,6 +150,11 @@ public class FrameLoginAdmin extends JFrame {
         buttonsPanel.add(btnLogin);
         buttonsPanel.add(btnClear);
 
+
+        /*************** Imagen del Logo ***************/
+        ImageIcon logoIcon = new ImageIcon("src/Interfaz/Imagenes/gato.PNG");
+        JLabel logoLabel = new JLabel(logoIcon);
+        logoLabel.setHorizontalAlignment(JLabel.CENTER);
 
         /*************** Panel Principal mostrado en Interfaz ***************/
         //Variable para importar del package de JPanel
@@ -133,7 +167,7 @@ public class FrameLoginAdmin extends JFrame {
         panelPrincipal.add(formaDePanel, BorderLayout.NORTH);
         panelPrincipal.add(datosUsuarioPanel, BorderLayout.CENTER);
         panelPrincipal.add(buttonsPanel, BorderLayout.SOUTH);  
-        
+        panelPrincipal.add(logoLabel, BorderLayout.CENTER);
 
         /*************** Panel en Interfaz ***************/
         add(panelPrincipal);
@@ -141,13 +175,15 @@ public class FrameLoginAdmin extends JFrame {
 
         /*************** Datos de Ventana ***************/
         //Nombre de la "App"
-        setTitle("Login Red Social de Mascotas");
+        setTitle("LOGIN PET NETWORK");
         //Tamaño de la Ventana (Normal)
         setSize(500, 600);
         //Tamaño de la Ventana (Mínimo)
         setMinimumSize(new Dimension(300, 400));
         //Botón de Cierre (X)
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //Centrar la ventana
+        setLocationRelativeTo(null);
         //Ventana visible 
         setVisible(true);
     }

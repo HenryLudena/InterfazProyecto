@@ -25,7 +25,7 @@ public class TablaDAOMascota extends SQLiteDataHelper {
     }
 
     public ResultSet getAllMascota() throws NetworkException{
-        String query = " SELECT M.MAS_NOMBRE, T.TIPNOMBRE, P.PRONOMBRES, P.PROAPELLIDOS, P.PROTELEFONO, M.MAS_OBSERVACION, M.MAS_SINTOMA_ALERGIAS"
+        String query = " SELECT P.PROID, T.TIPID, M.MASID, M.MAS_NOMBRE, T.TIPNOMBRE, P.PRONOMBRES, P.PROAPELLIDOS, P.PROTELEFONO, M.MAS_OBSERVACION, M.MAS_SINTOMA_ALERGIAS"
                      + " FROM   MASCOTA M"
                      + " JOIN   TIPO T ON M.TIPID = T.TIPID"
                      + " JOIN   PROPIETARIO P ON M.PROID = P.PROID"
@@ -113,14 +113,14 @@ public class TablaDAOMascota extends SQLiteDataHelper {
             throw new NetworkException(e, getClass(), "updateMascota()");
         }
     }
-    //Cambia Estado a X, se debe colocar el nombre
-    public boolean deleteMascota(String MAS_NOMBRE ) throws NetworkException  {
-        String query = " UPDATE MASCOTA SET MAS_ESTADO = ? WHERE IdSexo = ?";
+    //Cambia Estado a X, se debe colocar el ID
+    public boolean deleteMascota(int PERFIL_ID ) throws NetworkException  {
+        String query = " UPDATE MASCOTA SET MAS_ESTADO = ? WHERE PERFIL_ID = ?";
         try {
             Connection          conn = openConnection();
             PreparedStatement pstmt  = conn.prepareStatement(query);
             pstmt.setString(1, "X");
-            pstmt.setString(2, MAS_NOMBRE);
+            pstmt.setInt(2, PERFIL_ID);
             pstmt.executeUpdate();
             return true;
         } 

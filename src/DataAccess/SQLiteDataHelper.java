@@ -8,7 +8,7 @@ import Framework.NetworkException;
 
 public abstract class SQLiteDataHelper {
     
-    private static String DBPathConnection = "jdbc:sqlite:database\\TinderPet.db"; //null;
+    private static String DBPathConnection = "jdbc:sqlite:database\\PetNetwork.db"; //null;
     private static Connection conn = null;
     public SQLiteDataHelper(){
         // if (!dbPathConnection.isEmpty())

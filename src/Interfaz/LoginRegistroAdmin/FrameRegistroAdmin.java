@@ -137,13 +137,15 @@ public class FrameRegistroAdmin extends JFrame{
       setCedulaVerificada(cedulaVerificada);
       /*************** Datos de la Ventana ***************/
         //Nombre de la "App"
-        setTitle("Registro Red Social de Mascotas");
+        setTitle("Registro PET NETWORK");
         //Tamaño de la Ventana (Normal)
         setSize(500, 600);
         //Tamaño de la Ventana (Mínimo)
         setMinimumSize(new Dimension(300, 400));
         //Botón de Cierre (X)
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //Centrar la ventana
+        setLocationRelativeTo(null);
         //Ventana visible 
         setVisible(true);
         
